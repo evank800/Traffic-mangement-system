@@ -16,7 +16,7 @@ class Parken: public Verhalten {
 private:
 	double p_dStartZeitPunkt = 0;
 public:
-	Parken(const Weg& weg1, double dStartZeitPunkt);
+	Parken(Weg& weg1, double dStartZeitPunkt);
 	virtual ~Parken();
 	double dStrecke(Fahrzeug& aFzg, double ZeitIntervall) override;
 };

@@ -23,10 +23,10 @@ class Weg;
 class Verhalten {
 
 protected:
-	const Weg& p_Weg;
+	Weg& p_Weg;
 public:
 	Verhalten();
-	Verhalten(const Weg &weg1);//Verhalten haengt vom Weg an
+	Verhalten(Weg &weg1);//Verhalten haengt vom Weg an
 	virtual ~Verhalten();
 
 	//double dStrecke(Fahrzeug& aFzg, double ZeitIntervall);//ermittelt wie weit ein Fahrzeug innerhalb

@@ -15,7 +15,7 @@ class Fahrzeug;
 
 class Fahren: public Verhalten { // speichert auch Wege(Da unterklasse ist)
 public:
-	Fahren(const Weg& weg1);
+	Fahren(Weg& weg1);
 	virtual ~Fahren();
 
 };

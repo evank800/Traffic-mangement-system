@@ -12,7 +12,7 @@
 
 }*/
 
-Fahrausnahme::Fahrausnahme(const Fahrzeug& fahrzeug, const Weg& weg):
+Fahrausnahme::Fahrausnahme(Fahrzeug& fahrzeug, Weg& weg):
 	Fzg(fahrzeug), weg(weg){
 
 }

@@ -16,11 +16,11 @@ class Weg;
 
 class Fahrausnahme: std::exception { // or from std::runtime_error?
 protected:
-	const Fahrzeug& Fzg;
-	const Weg& weg;
+	Fahrzeug& Fzg;
+	Weg& weg;
 public:
 	//Fahrausnahme();
-	Fahrausnahme(const Fahrzeug& fahrzeug, const Weg& weg);
+	Fahrausnahme(Fahrzeug& fahrzeug, Weg& weg);
 	virtual ~Fahrausnahme();
 	virtual void vBearbeiten() = 0;//rein virtuell
 };

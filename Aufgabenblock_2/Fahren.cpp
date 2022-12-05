@@ -7,7 +7,7 @@
 
 #include "Fahren.h"
 
-Fahren::Fahren(const Weg& weg1):
+Fahren::Fahren(Weg& weg1):
 	Verhalten(weg1){
 	// TODO Auto-generated constructor stub
 

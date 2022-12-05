@@ -14,7 +14,7 @@ class Weg;
 class Losfahren: public Fahrausnahme {
 public:
 	//Losfahren();
-	Losfahren(const Fahrzeug& fahrzeug, const Weg& weg);
+	Losfahren(Fahrzeug& fahrzeug, Weg& weg);
 	virtual ~Losfahren();
 	void vBearbeiten() override;
 };

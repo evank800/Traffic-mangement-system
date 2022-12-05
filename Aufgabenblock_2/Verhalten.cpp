@@ -10,6 +10,7 @@
 #include "Weg.h"
 #include "Fahrausnahme.h"
 #include "Streckenende.h"
+#include <math.h>
 
 /*
 Verhalten::Verhalten() {
@@ -17,7 +18,7 @@ Verhalten::Verhalten() {
 
 }
 */
-Verhalten::Verhalten(const Weg& weg1):
+Verhalten::Verhalten(Weg& weg1):
 	p_Weg(weg1){
 
 }
@@ -30,9 +31,9 @@ Verhalten::~Verhalten() {
 double Verhalten::dStrecke(Fahrzeug& aFzg, double ZeitIntervall){
 
 
-	if(aFzg.getAbschnittStrecke() <= p_Weg.getLaenge()){//Wenn Weglaenge groesser als der zurueckgelegten Weg des Fahrzeugs...
+	if(aFzg.getAbschnittStrecke() < p_Weg.getLaenge()){//Wenn Weglaenge groesser als der zurueckgelegten Weg des Fahrzeugs...
 
-		if((aFzg.dGeschwindigkeit() * ZeitIntervall) <= (p_Weg.getLaenge() - aFzg.getAbschnittStrecke()))
+		if((aFzg.dGeschwindigkeit() * ZeitIntervall) < (p_Weg.getLaenge() - aFzg.getAbschnittStrecke()))
 			return aFzg.dGeschwindigkeit() * ZeitIntervall;
 		else{
 			return (p_Weg.getLaenge() - aFzg.getAbschnittStrecke());
@@ -44,8 +45,8 @@ double Verhalten::dStrecke(Fahrzeug& aFzg, double ZeitIntervall){
 		throw Streckenende(aFzg, p_Weg);
 		return 0;
 		//std::cout << "Wegende" << std::endl; //sinvoll hier throw() zu benutzen?
-
 	}
+
 }
 
 

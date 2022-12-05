@@ -10,7 +10,7 @@
 #include "Fahrzeug.h"
 #include "Losfahren.h"
 
-Parken::Parken(const Weg& weg1, double dStartZeitPunkt):
+Parken::Parken(Weg& weg1, double dStartZeitPunkt):
 	Verhalten(weg1), p_dStartZeitPunkt(dStartZeitPunkt){
 	// TODO Auto-generated constructor stub
 
@@ -31,11 +31,19 @@ double Parken::dStrecke(Fahrzeug& aFzg, double ZeitIntervall){
 	if(dGlobaleZeit < p_dStartZeitPunkt){
 		return 0.0;
 	}*/
+	/*
 	if(fabs(dGlobaleZeit - p_dStartZeitPunkt) < 0.001){
 		throw Losfahren(aFzg, p_Weg);
 	}
 	else{
 		return 0;
 		//std::cout << "das Fahrzeug faehrt los" << std::endl;
+	}*/
+
+	if(dGlobaleZeit < p_dStartZeitPunkt){
+		return 0;
+	}
+	else{
+		throw Losfahren(aFzg, p_Weg);
 	}
 }

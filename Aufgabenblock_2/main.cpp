@@ -2,13 +2,15 @@
 #include <memory>
 #include <vector>
 #include <cmath>
-
+#include <random>
 #include "Fahrzeug.h"
 #include "PKW.h"
 #include "Fahrrad.h"
 #include "Simulationsobjekt.h"
 #include "Weg.h"
 #include "SimuClient.h"
+#include "vertagt_aktion.h"
+#include "vertagt_liste.h"
 
 
 double dGlobaleZeit = 0.0;
@@ -357,9 +359,10 @@ void vAusgabe_5(){
 }
 
 void vAufgabe_6(){
+
 	/*
-	auto weg1 = std::make_unique<Weg>("Elsassstr", 12.3, Tempolimit::Innerorts);
-	auto weg2 = std::make_unique<Weg>("Autobahn", 24, Tempolimit::Innerorts);
+	auto weg1 = std::make_unique<Weg>("Elsassstr", 200, Tempolimit::Innerorts);
+	auto weg2 = std::make_unique<Weg>("Autobahn", 250, Tempolimit::Innerorts);
 
 	auto BMW1 = std::make_unique<PKW>("BMW1", 256, 7.3, 62);
 	auto Audi1 = std::make_unique<PKW>("Audi1", 288, 9.1, 71);
@@ -372,14 +375,14 @@ void vAufgabe_6(){
 	auto CAT2 = std::make_unique<Fahrrad>("CAT2", 52);
 	//------------------Weg::vAnnahme() -> Fahrzeuge aufnehmen(deren Verhalten schon bestimmt ist)s----------------------//
 	weg1 -> vAnnahme(move(BMW1)); //Fahren
-	weg1 -> vAnnahme(move(Audi1), 0.8);//Parken
+	weg1 -> vAnnahme(move(Audi1), 2);//Parken
 	weg1 -> vAnnahme(move(BMX1));
-	weg1 -> vAnnahme(move(CAT1), 0.8);
+	weg1 -> vAnnahme(move(CAT1), 3);
 
 	weg2 -> vAnnahme(move(BMW2)); //Fahren
-	weg2 -> vAnnahme(move(Audi2), 0.8);
+	weg2 -> vAnnahme(move(Audi2), 2);
 	weg2 -> vAnnahme(move(BMX2));
-	weg2 -> vAnnahme(move(CAT2), 0.8);
+	weg2 -> vAnnahme(move(CAT2), 3);
 
 
 
@@ -396,6 +399,8 @@ void vAufgabe_6(){
 
 		dGlobaleZeit += dTakt;
 	}*/
+
+/*
 	bInitialisiereGrafik(800, 500);
 	auto Autobahn1 = std::make_unique<Weg>("Autobahn1", 500, Tempolimit::Autobahn);
 	auto Autobahn2 = std::make_unique<Weg>("Autobahn2", 500, Tempolimit::Autobahn);
@@ -411,17 +416,110 @@ void vAufgabe_6(){
 	Autobahn2 -> vAnnahme(move(Opel), 3);
 
 	double dTakt = 0.2;
-	while(dGlobaleZeit <= 8){
+
+	Autobahn1 -> vKopf();
+	while(dGlobaleZeit <= 10){
 		Autobahn1 -> vSimulieren();
 		Autobahn2 -> vSimulieren();
-		BMW -> vZeichnen(*Autobahn1);
-		Audi -> vZeichnen(*Autobahn1);
-		BMX -> vZeichnen(*Autobahn2);
-		Opel -> vZeichnen(*Autobahn2);
+		vSetzeZeit(dGlobaleZeit);
+
+		std::cout << *Autobahn1;
+		std::cout << *Autobahn2;
+
+		vSleep(500);
 
 		dGlobaleZeit += dTakt;
 	}
+	vBeendeGrafik();
+*/
 
+	//-----------VListe--------------//
+	bInitialisiereGrafik(800, 500);
+		auto Autobahn1 = std::make_unique<Weg>("Autobahn1", 500, Tempolimit::Autobahn);
+		auto Autobahn2 = std::make_unique<Weg>("Autobahn2", 500, Tempolimit::Autobahn);
+
+		auto BMW = std::make_unique<PKW>("BMW", 250, 10, 50);
+		auto Audi = std::make_unique<PKW>("Audi", 200, 8, 55);
+		auto BMX = std::make_unique<Fahrrad>("BMX", 25);
+		auto Opel = std::make_unique<PKW>("Opel", 150, 9, 45);
+		int iKoordinaten[] = {700, 250, 100, 250};
+		bZeichneStrasse(Autobahn1 -> getName(), Autobahn2 -> getName(), 500, 2, iKoordinaten);
+		Autobahn1 -> vAnnahme(move(BMW));
+		Autobahn1 -> vAnnahme(move(Audi), 3);
+		Autobahn2 -> vAnnahme(move(BMX));
+		Autobahn2 -> vAnnahme(move(Opel), 3);
+
+		double dTakt = 0.2;
+
+		Autobahn1 -> vKopf();
+		while(dGlobaleZeit <= 10){
+			Autobahn1 -> vSimulieren();
+			Autobahn2 -> vSimulieren();
+			vSetzeZeit(dGlobaleZeit);
+
+			std::cout << *Autobahn1;
+			std::cout << *Autobahn2;
+
+			vSleep(500);
+
+			dGlobaleZeit += dTakt;
+		}
+		vBeendeGrafik();
+
+}
+
+void vAufgabe_6a(){
+	static std::mt19937 device(0);
+	std::uniform_int_distribution<int> dist(1, 10);
+
+	//--------eine Liste erzeugen-----------//
+	vertagt::VListe<int> Liste;
+
+	//--------Elemente hinzufuegen----------//
+	for(int i = 0; i < 10; i++){
+		Liste.push_back(dist(device));//'push_back' erzeugt einen unique_ptr<Aktion<T>>
+		//und fuegt ihn in die p_aktionen Liste hinzu => Also nur beim vAktualiseren()
+		//werden die Elemente in die Liste eingetragen
+	}
+
+	Liste.vAktualisieren(); //die AKtionen ausfuehren
+
+
+	for(auto i = Liste.begin(); i != Liste.end(); i++){
+		std::cout << *i << " "; // dereferenziert
+		}
+	std::cout << std::endl;
+
+
+	//------------Elememnte > 5 loeschen-------------//
+	for(auto i = Liste.begin(); i != Liste.end(); i ++){
+		if(*i > 5){
+			Liste.erase(i);
+			std::cout << "Die Elemente: " << *i << " " << " werden geloescht" << std::endl;
+		}
+	}
+
+	Liste.vAktualisieren(); // geloescht
+
+
+	for(auto i = Liste.begin(); i != Liste.end(); i++){
+		std::cout << *i << " "; // dereferenziert
+	}
+	std::cout << std::endl;
+
+
+	//-------Am Anfang und am Ende, Elemente einfuegen----------//
+
+
+	Liste.push_front(3);
+	Liste.push_back(7);
+	Liste.vAktualisieren();
+
+
+	for(auto i = Liste.begin(); i != Liste.end(); i++){
+		std::cout << *i << " "; // dereferenziert
+	}
+	std::cout << std::endl;
 
 }
 
@@ -442,4 +540,6 @@ int main(){
 	//vAusgabe_5();
 
 	vAufgabe_6();
+
+	//vAufgabe_6a();
 }

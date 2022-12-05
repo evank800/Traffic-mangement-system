@@ -14,6 +14,9 @@
 #include "Simulationsobjekt.h"
 #include "Tempolimit.h"
 #include "Fahrzeug.h"
+#include <iterator>
+#include "vertagt_aktion.h"
+#include "vertagt_liste.h"
 
 class Fahrzeug;
 class Verhalten;
@@ -23,7 +26,8 @@ class Weg: public Simulationsobjekt {
 protected:
 	double p_dLaenge = 0; // in km
 	Tempolimit p_eTempolimit = Tempolimit::Autobahn; //setTempolimit erstellen?
-	std::list<std::unique_ptr<Fahrzeug>> p_pFahrzeuge;
+	//std::list<std::unique_ptr<Fahrzeug>> p_pFahrzeuge;
+	vertagt::VListe<std::unique_ptr<Fahrzeug>> p_pFahrzeuge;
 public:
 	//Weg();
 	Weg(std::string name, double wegLaenge, Tempolimit tempoLimit=Tempolimit::Autobahn);//tempo limit default: unbegrenzt(Autobahn)
@@ -38,12 +42,15 @@ public:
 	void vKopf() override;
 
 	std::string getName() const;
-	double getLaenge() const; // const muss geschrieben werden(should be decared
+	double getLaenge() const; // const muss geschrieben werden(should be declared
 	//that the method should not make changes to the object)
 	//because p_pWeg(in Verhalten) is declared as const
 
 	void vAnnahme(std::unique_ptr<Fahrzeug> Fzg); // Beim Fahren
 	void vAnnahme(std::unique_ptr<Fahrzeug> Fzg, double dStartZeitPunkt);//Beim Parken
+
+	std::unique_ptr<Fahrzeug> pAbgabe(const Fahrzeug& aFzg); // returns unique_ptr<Fahrzeug>
+
 };
 
 //#endif /* WEG_H_ */

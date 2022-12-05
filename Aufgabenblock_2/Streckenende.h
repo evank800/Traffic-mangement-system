@@ -14,7 +14,7 @@ class Weg;
 class Streckenende: public Fahrausnahme {
 public:
 	//Streckenende();
-	Streckenende(const Fahrzeug& fahrzeug, const Weg& weg);
+	Streckenende(Fahrzeug& fahrzeug, Weg& weg);
 	virtual ~Streckenende();
 	void vBearbeiten() override;
 };

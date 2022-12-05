@@ -13,7 +13,7 @@ Streckenende::Streckenende() {
 	// TODO Auto-generated constructor stub
 }*/
 
-Streckenende::Streckenende(const Fahrzeug& fahrzeug, const Weg& weg):
+Streckenende::Streckenende(Fahrzeug& fahrzeug, Weg& weg):
 	Fahrausnahme(fahrzeug, weg){
 
 }
@@ -24,4 +24,5 @@ Streckenende::~Streckenende() {
 
 void Streckenende::vBearbeiten(){
 	std::cout << "Streckenende: das Fahrzeug: " << Fzg.getName() << " ist zum Ende des Weges: " << weg.getName() << " gekommen" << std::endl;
+	weg.pAbgabe(Fzg);
 }
