@@ -61,13 +61,13 @@ namespace vertagt
 		void push_back(T obj)
 		{
 			// Aktionselement für PushBack auf Liste erzeugen
+			//std::make_unique<VPushBack<T>>(std::list<T>& p_pListe, T obj)
 			p_aktionen.push_back(std::make_unique<VPushBack<T>>(p_objekte, std::move(obj)));//move(obj) here as well
 		}
 		void push_front(T obj)
 		{
 			// Aktionselement für PushBack auf Liste erzeugen
 			p_aktionen.push_back(std::make_unique<VPushFront<T>>(p_objekte, std::move(obj)));
-			//sollte es nicht push_push back sein? da die Liste p_aktionen nur die Reihenfolge der Aktionen darstellt
 		}
 
 		void erase(iterator it)

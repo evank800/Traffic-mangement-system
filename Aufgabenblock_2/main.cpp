@@ -449,8 +449,8 @@ void vAufgabe_6(){
 		Autobahn2 -> vAnnahme(move(BMX));
 		Autobahn2 -> vAnnahme(move(Opel), 3);
 
-		double dTakt = 0.2;
-
+		double dTakt = 0.4;
+		//----------Simulieren--------//
 		Autobahn1 -> vKopf();
 		while(dGlobaleZeit <= 10){
 			Autobahn1 -> vSimulieren();
@@ -539,7 +539,7 @@ int main(){
 
 	//vAusgabe_5();
 
-	vAufgabe_6();
+	//vAufgabe_6();
 
-	//vAufgabe_6a();
+	vAufgabe_6a();
 }

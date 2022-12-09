@@ -56,7 +56,7 @@ void PKW::vSimulieren(){
 void PKW::vSimulieren(){
 	double dZwischenZeit = dGlobaleZeit - p_dZeit;
 		if(p_pVerhalten != nullptr){
-			double dGefahren = p_pVerhalten -> dStrecke(*this, dZwischenZeit);//'this' muss dereferenziert werden
+			double dGefahren = p_pVerhalten -> dStrecke(*this, dZwischenZeit);//'this' muss dereferenziert werden / Verhalten::dStrecke(Fahrzeug& aFzg, double ZeitIntervall)
 			p_dAbschnittStrecke += dGefahren;
 			p_dGesamtStrecke += dGefahren;
 			double dZwischenVerbrauch = p_dVerbrauch/100 * dGefahren;

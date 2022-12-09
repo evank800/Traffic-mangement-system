@@ -99,10 +99,10 @@ void Weg::vAnnahme(std::unique_ptr<Fahrzeug> Fzg){
 //------------------------Parkende Fahrzeuge annehmen--------------------------------//
 void Weg::vAnnahme(std::unique_ptr<Fahrzeug> Fzg, double dStartZeitPunkt){
 	Fzg -> vNeueStrecke(*this, dStartZeitPunkt); // Verhalten bestimmen -> Hier Parken
-	p_pFahrzeuge.push_front(move(Fzg)); // front?
+	p_pFahrzeuge.push_front(move(Fzg));
 }
 
-//--------Zum Starten des Fahrzeuges----------//
+//--------Zu den Fahrausnahmen----------//
 std::unique_ptr<Fahrzeug> Weg::pAbgabe(const Fahrzeug& aFzg){
 
 	std::list<std::unique_ptr<Fahrzeug>>::iterator i;//i is a pointer pointing to pointers inside the list

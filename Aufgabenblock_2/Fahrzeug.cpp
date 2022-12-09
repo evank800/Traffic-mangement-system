@@ -168,7 +168,7 @@ void Fahrzeug::vNeueStrecke(Weg& weg2){
 	p_dZeit = dGlobaleZeit;
 }
 
-
+//---------------zum Parken-----------------//
 void Fahrzeug::vNeueStrecke(Weg& weg2, double dStartZeitPunkt){
 	p_pVerhalten = std::make_unique<Parken>(weg2, dStartZeitPunkt);
 	p_dAbschnittStrecke = 0;
